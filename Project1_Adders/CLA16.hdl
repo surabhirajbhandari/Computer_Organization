@@ -1,0 +1,20 @@
+/**
+ * 16-bit CLA constructed using four 4-bit CLAs linked up in carry-ripple fashion.
+ * Author: Naga Kandasamy
+ * Date created: July 9, 2020
+ * Date modified: September 12, 2021
+ * 
+ * Student name(s): Surabhi Rajbhandari
+ 
+ */
+
+ CHIP CLA16 {
+    IN x[16], y[16];    // 16-bit inputs
+    OUT z[16];          //  16-bit output
+
+    PARTS: 
+    CLA4(x=x[0..3], y=y[0..3], z=z[0..3], cout=c0);
+    CLA4(x=x[4..7], y=y[4..7], cin=c0, z=z[4..7], cout=c1);
+    CLA4(x=x[8..11], y=y[8..11], cin=c1, z=z[8..11], cout=c2);
+    CLA4(x=x[12..15], y=y[12..15], cin=c2, z=z[12..15], cout=cout);
+}

@@ -1,0 +1,21 @@
+/**
+ * Full-adder stage computes the sum of three bits.
+ * Author: Naga Kandasamy
+ * Date created: June 29, 2020
+ * Date modified: September 12, 2021
+ * 
+ * Student name(s): Surabhi Rajbhandari
+ 
+ */
+
+CHIP FullAdder {
+    IN x, y, cin;  // Inputs: x_i, y_i, and c_{i-1}
+    OUT z, cout;   // Outputs: z_i and c_i
+
+    PARTS:
+    Xor(a=x, b=y, out=temp1);
+    Xor(a=temp1, b=cin, out=z);
+    And(a=x, b=y, out=temp2);
+    And(a=temp1, b=cin, out=temp3);
+    Or(a=temp2, b=temp3, out=cout);
+}

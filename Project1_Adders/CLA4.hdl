@@ -1,0 +1,49 @@
+/**
+ * 4-bit CLA.
+ * Author: Naga Kandasamy
+ * Date created: June 29, 2020
+ * Date modified: September 12, 2021
+ * 
+ * Student name(s): Surabhi Rajbhandari
+ */
+
+CHIP CLA4 {
+    IN x[4], y[4], cin;     // 4-bit inputs
+    OUT z[4], cout;         // 4-bit output, 1 carry out bit
+
+    PARTS: 
+    //Generate
+    And(a=x[0], b=y[0], out=g0);
+    And(a=x[1], b=y[1], out=g1);
+    And(a=x[2], b=y[2], out=g2);
+    And(a=x[3], b=y[3], out=g3);
+
+    //Propogate
+    Or(a=x[0], b=y[0], out=p0);
+    Or(a=x[1], b=y[1], out=p1);
+    Or(a=x[2], b=y[2], out=p2);
+    Or(a=x[3], b=y[3], out=p3);
+
+    //Generate carries
+	//c0
+	And(a=p0, b=cin, out=temp1);
+	Or(a=g0, b=temp1, out=c0);
+
+	//c1
+	And(a=p1, b=c0, out=temp2);
+	Or(a=g1, b=temp2, out=c1);
+	
+	//c2
+	And(a=p2, b=c1, out=temp3);
+	Or(a=g2, b=temp3, out=c2);
+
+	//c3
+	And(a=p3, b=c2, out=temp4);
+	Or(a=g3, b=temp4, out=cout);
+	
+	//Full adders
+    FullAdder(x=x[0], y=y[0], cin=cin, z=z[0], cout= dv1);
+	FullAdder(x=x[1], y=y[1], cin=c0, z=z[1], cout=dv2);
+	FullAdder(x=x[2], y=y[2], cin=c1, z=z[2], cout=dv3);
+	FullAdder(x=x[3], y=y[3], cin=c2, z=z[3], cout=dv4);	
+}

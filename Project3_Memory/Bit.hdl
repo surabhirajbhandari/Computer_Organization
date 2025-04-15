@@ -1,0 +1,23 @@
+ /** 
+ * Memory cell design from the book "The Elements of Computing Systems" by Nisan and Schocken, MIT Press.
+ * 
+ * 1-bit memory cell:
+ * If load[t] == 1 then out[t+1] = in[t]
+ *                 else out does not change (out[t+1] = out[t])
+ *
+ * Author: Naga Kandasamy
+ * Date created: July 11, 2020
+ * 
+ * Student name(s): Surabhi Rajbhandari 
+ * Date modified: 7/22/23
+ */
+
+CHIP Bit {
+    IN in, load;
+    OUT out;
+
+    // Implementation tip: Can be built using a DFF and a multiplexer.
+    PARTS:
+    Mux(a=out2, b=in, sel=load, out=out1); 
+    DFF(in=out1, out=out, out=out2);
+}
